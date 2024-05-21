@@ -19,7 +19,7 @@ type LinksDBConfig struct {
 type MongoConfig struct {
 	Name           string        `env:"NAME,default=links"`
 	Host           string        `env:"HOST,default=127.0.0.1"`
-	Port           int           `env:"PORT,default=27017"`
+	Port           int           `env:"PORT,default=27018"`
 	User           string        `env:"USER,default=mongo"`
 	Password       string        `env:"USER,default=mongo"`
 	MinPoolSize    uint64        `env:"MIN_POOL_SIZE,default=5"`

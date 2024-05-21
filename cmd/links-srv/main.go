@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os/signal"
@@ -27,6 +28,7 @@ func runMain(ctx context.Context) error {
 		return fmt.Errorf("setup.Setup: %w", err)
 	}
 	_ = e
+
 	create, err := e.LinksRepository.Create(
 		ctx, links.CreateReq{
 			ID:     primitive.NewObjectID(),
@@ -54,6 +56,25 @@ func runMain(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(create, found, foundBy)
+
+	// Улучшенный форматированный вывод
+	fmt.Println("Created link:")
+	printJSON(create)
+
+	fmt.Println("Found link by URL and UserID:")
+	printJSON(found)
+
+	fmt.Println("Found links by criteria:")
+	printJSON(foundBy)
+
 	return nil
+}
+
+// printJSON выводит объект в формате JSON с отступами
+func printJSON(v interface{}) {
+	encoded, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		log.Fatalf("Error encoding JSON: %v", err)
+	}
+	fmt.Println(string(encoded))
 }
